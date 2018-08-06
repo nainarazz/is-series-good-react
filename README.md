@@ -1,2 +1,2 @@
 # movie-browser-react
-This is a react app that allows you to browse for movies and tv shows.
+This is a react side project that allows you to know if a tv serie is worth watching based on it's ratings.
