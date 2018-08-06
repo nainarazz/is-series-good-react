@@ -13,20 +13,20 @@ const styles = {
     },
     media: {
         height: 0,
-        paddingTop: '56.25%', // 16:9
+        paddingTop: '33.25%', // 16:9
     },
 };
 
 const card = (props) => {
     const { classes } = props;
     return (
-            <Card className={classes.card}>
+            <Card>
                 <CardMedia
                     className={classes.media}
                 />
                 <CardContent>
                     <Typography gutterBottom variant="headline" component="h2">
-                        Movie {props.index}
+                        Movie
                     </Typography>
                     <Typography component="p">
                         this will be a movie summary description
