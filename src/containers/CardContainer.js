@@ -4,24 +4,8 @@ import Grid from '@material-ui/core/Grid';
 import SerieCard from '../components/SerieCard';
 import PosterCard from '../components/PosterCard';
 import SearchBar from '../components/SearchBar';
-import axios from '../axios';
-import {TMBD_API_KEY} from '../store/api-constants';
 
 class CardContainer extends Component {
-
-    componentDidMount() {
-        this.getTvShow();
-    }
-
-    getTvShow = () => {
-        axios.get(`/search/tv?api_key=${TMBD_API_KEY}&language=en-US&query=silicon%20valley`)
-        .then(result => {
-            console.log("TV show returned: ", result.data.results);
-        })
-        .catch(error => {
-            console.log(error.message);
-        });
-    }
 
     render() {
         return (
