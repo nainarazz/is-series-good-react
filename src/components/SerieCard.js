@@ -20,9 +20,9 @@ const card = (props) => {
     const { classes } = props;
     return (
             <Card className={classes.card}>
-                <CardMedia
+                {/* <CardMedia
                     className={classes.media}
-                />
+                /> */}
                 <CardContent>
                     <Typography gutterBottom variant="headline" component="h2">
                         Movie
