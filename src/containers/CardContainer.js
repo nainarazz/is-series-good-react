@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import Grid from '@material-ui/core/Grid';
-import SerieCard from '../components/SerieCard';
-import PosterCard from '../components/PosterCard';
+import SerieCard from '../components//SerieCard/SerieCard';
+import PosterCard from '../components/PosterCard/PosterCard';
 import SearchBar from '../components/SearchBar/SearchBar';
 
 class CardContainer extends Component {

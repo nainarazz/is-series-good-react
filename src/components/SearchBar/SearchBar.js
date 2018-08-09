@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
-import axios from '../../axios';
+import {tmbdInstance, tvMazeinstance} from '../../axios';
 import { TMBD_API_KEY } from '../../store/api-constants';
 import theme from './searchBar.css';
 import { connect } from 'react-redux';
@@ -13,17 +13,19 @@ class SearchBar extends Component {
     }
 
     onSuggestionsFetchRequested = ({ value }) => {
-        this.getTvShow(value);
+        this.getTvShow(value).then(suggestions => {
+            this.setState({ suggestions });
+        });
     }
 
     onSuggestionsClearRequested = () => {
         this.setState({ suggestions: [] });
     }
 
-    getSuggestionValue = suggestion => suggestion.original_name;
+    getSuggestionValue = suggestion => suggestion.show.name;
 
     renderSuggestion = suggestion => (
-        <div>{suggestion.name}</div>
+        <div>{suggestion.show.name}</div>
     );
 
     onChange = (event, { newValue, method }) => {
@@ -31,18 +33,16 @@ class SearchBar extends Component {
     };
 
     getTvShow = (searchValue) => {
-        axios.get(`/search/tv?api_key=${TMBD_API_KEY}&language=en-US&query=${searchValue}`)
+        return tvMazeinstance.get(`/search/shows?q=${searchValue}`)
             .then(r => {
-                const suggestions = r.data.results.filter(show => show.original_language === "en");
-                this.setState({ suggestions });
+                console.log(r.data);
+                const englishShows = r.data.filter(s => s.show.language === "English");
+                return englishShows;
             })
             .catch(error => {
                 console.log(error.message);
+                throw new Error('error getting tv show ', error.message);
             });
-    }
-
-    onSuggestionSelected(event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) {
-        console.log(suggestion);
     }
 
     render() {
@@ -61,7 +61,7 @@ class SearchBar extends Component {
                 suggestions={suggestions}
                 onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
                 onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                onSuggestionSelected={(event, { suggestion }) => this.props.showSuggestionSelected(suggestion)}
+                onSuggestionSelected={(event, { suggestion }) => this.props.showSuggestionSelected(suggestion.show)}
                 getSuggestionValue={this.getSuggestionValue}
                 renderSuggestion={this.renderSuggestion}
                 inputProps={inputProps}
