@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-const instance = axios.create({
+export const tmbdInstance = axios.create({
     baseURL: 'https://api.themoviedb.org/3'
 });
 
-export default instance;
+export const tvMazeinstance = axios.create({
+    baseURL: 'http://api.tvmaze.com'
+});
