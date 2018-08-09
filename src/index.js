@@ -5,13 +5,14 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+import reducer from './store/reducers/tvShowReducer';
 
-// const store = createStore();
+const store = createStore(reducer);
 
 const app = (
-    // <Provider store={store}>
+    <Provider store={store}>
         <App />
-    // </Provider>
+    </Provider>
 )
 
 ReactDOM.render(app, document.getElementById('root'));

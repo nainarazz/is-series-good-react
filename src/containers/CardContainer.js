@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import SerieCard from '../components/SerieCard';
 import PosterCard from '../components/PosterCard';
-import SearchBar from '../components/SearchBar';
+import SearchBar from '../components/SearchBar/SearchBar';
 
 class CardContainer extends Component {
 

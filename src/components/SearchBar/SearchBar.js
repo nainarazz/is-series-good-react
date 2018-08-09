@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
-import axios from '../axios';
-import { TMBD_API_KEY } from '../store/api-constants';
+import axios from '../../axios';
+import { TMBD_API_KEY } from '../../store/api-constants';
 import theme from './searchBar.css';
+import { connect } from 'react-redux';
 
 class SearchBar extends Component {
     state = {
         suggestions: [],
-        value: ''
+        value: '',
+        selectedShow: {}
     }
 
     onSuggestionsFetchRequested = ({ value }) => {
@@ -21,7 +23,7 @@ class SearchBar extends Component {
     getSuggestionValue = suggestion => suggestion.original_name;
 
     renderSuggestion = suggestion => (
-        <div>{suggestion.original_name}</div>
+        <div>{suggestion.name}</div>
     );
 
     onChange = (event, { newValue, method }) => {
@@ -31,7 +33,8 @@ class SearchBar extends Component {
     getTvShow = (searchValue) => {
         axios.get(`/search/tv?api_key=${TMBD_API_KEY}&language=en-US&query=${searchValue}`)
             .then(r => {
-                this.setState({ suggestions : r.data.results})
+                const suggestions = r.data.results.filter(show => show.original_language === "en");
+                this.setState({ suggestions });
             })
             .catch(error => {
                 console.log(error.message);
@@ -39,12 +42,11 @@ class SearchBar extends Component {
     }
 
     onSuggestionSelected(event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) {
-        console.log("suggestion selected ", {suggestion, suggestionValue, suggestionIndex, sectionIndex, method});
+        console.log(suggestion);
     }
 
     render() {
         const { value, suggestions } = this.state;
-        console.log("SUGGESTIONS", suggestions);
 
         const inputProps = {
             placeholder: 'Enter TV Serie',
@@ -59,7 +61,7 @@ class SearchBar extends Component {
                 suggestions={suggestions}
                 onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
                 onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                onSuggestionSelected={this.onSuggestionSelected}
+                onSuggestionSelected={(event, { suggestion }) => this.props.showSuggestionSelected(suggestion)}
                 getSuggestionValue={this.getSuggestionValue}
                 renderSuggestion={this.renderSuggestion}
                 inputProps={inputProps}
@@ -68,4 +70,10 @@ class SearchBar extends Component {
     }
 }
 
-export default SearchBar;
+const mapDispatchToProps = dispatch => {
+    return {
+        showSuggestionSelected: (showData) => dispatch({type: "SET_SHOW", showData})
+    }
+};
+
+export default connect(null, mapDispatchToProps)(SearchBar);
