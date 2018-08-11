@@ -10,18 +10,18 @@ class CardContainer extends Component {
     render() {
         return (
             <Grid container direction="row">
-                <Grid item xs={12} sm={4} md={4}>
+                <Grid item xs={12} sm={12} md={4}>
                 </Grid>
 
-                <Grid item xs={12} sm={8} md={8}>
+                <Grid item xs={12} sm={12} md={8}>
                     <SearchBar />
                 </Grid>
 
-                <Grid item xs={12} sm={4} md={4}>
+                <Grid item xs={12} sm={12} md={4}>
                     <PosterCard />
                 </Grid>
 
-                <Grid item xs={12} sm={8} md={8}>
+                <Grid item xs={12} sm={12} md={8}>
                     <SerieCard />
                 </Grid>
 

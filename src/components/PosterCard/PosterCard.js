@@ -9,19 +9,18 @@ import styles from './posterCard.css';
 
 class PosterCard extends Component {
     render() {
-        const imageSource = (this.props.show.image && this.props.show.image.medium) || "";
+        const imageSource = (this.props.show.image && this.props.show.image.medium) || " ";
         return (
             <Card className={styles.card}>
                 <CardMedia
                     className={styles.media}
                     image={imageSource}
-                    src={imageSource}
                     title={this.props.show.name}
                 />
             </Card>
-        ); 
+        );
     }
-} 
+}
 
 const mapStateToProps = state => {
     return {
