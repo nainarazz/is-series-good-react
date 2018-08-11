@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import CardContainer from '../../containers/CardContainer';
+import CardContainer from '../../containers/CardContainer/CardContainer';
 
 const styles = {
     margin: "auto",
@@ -11,7 +11,6 @@ class Layout extends Component {
     render() {
         return (
             <div style={styles}>
-                <h3>Is this Serie good?</h3>
                 <CardContainer />
             </div>
         );
