@@ -4,3 +4,19 @@
     top: 40%;
     left: 25%;
 }
+
+@media screen and (max-width: 480px) {
+    .container { 
+        width: 75%;
+        top: 5%;
+        left: 10%;
+    }
+}
+
+@media screen and (max-width: 568px) {
+    .container { 
+        width: 75%;
+        top: 10%;
+        left: 10%;
+    }
+}

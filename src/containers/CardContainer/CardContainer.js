@@ -39,7 +39,7 @@ class CardContainer extends Component {
         if (!this.props.show.id) {
             components = (
                 <div>
-                    <Grid className={styles.container} item xs={12} sm={12} md={8}>
+                    <Grid className={styles.container}>
                         <h3>Is this Serie good?</h3>
                         <SearchBar />
                     </Grid>

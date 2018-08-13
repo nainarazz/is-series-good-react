@@ -29,8 +29,9 @@
   .suggestionsContainerOpen {
     display: block;
     position: absolute;
-    top: 51px;
+    top: 30px;
     width: 100%;
+    box-sizing: border-box;
     border: 1px solid #aaa;
     background-color: rgb(39, 38, 38);
     font-family: Helvetica, sans-serif;

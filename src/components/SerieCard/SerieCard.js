@@ -3,15 +3,14 @@ import { connect } from 'react-redux';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import styles from './serieCard.css';
+import classes from './serieCard.css';
 
 class SerieCard extends Component {
     render() {
         return (
-            <Card className={styles.card}>
+            <Card className={classes.card}>
                 <CardContent>
                     <Typography gutterBottom variant="headline" component="h2">
                         {this.props.show.name}
@@ -21,28 +20,28 @@ class SerieCard extends Component {
                         {this.props.show.summary && (this.props.show.summary).replace(/<[^>]+>/g, '')}
                     </Typography>
 
-                    <Grid container direction="row">
-                        <Grid item xs={6}>
-                            <Typography gutterBottom variant="subheading">
-                                Runtime
+                    <Grid className={classes.metaDataContainer} container direction="row">
+                        <Grid className={classes.gridMetaData} item xs={6}>
+                            <Typography className={classes.serieMetaData} gutterBottom variant="subheading">
+                                <span>Runtime</span>
                                 <p>{this.props.show.runtime}</p>
                             </Typography>
                         </Grid>
-                        <Grid item xs={6}>
-                            <Typography gutterBottom variant="subheading">
-                                Genres
+                        <Grid className={classes.gridMetaData} item xs={6}>
+                            <Typography className={classes.serieMetaData} gutterBottom variant="subheading">
+                                <span>Genres</span>
                                 <p>{this.props.show.genres && this.props.show.genres.join(", ")}</p>
                             </Typography>
                         </Grid>
-                        <Grid item xs={6}>
-                            <Typography gutterBottom variant="subheading">
-                                Premiered
+                        <Grid className={classes.gridMetaData} item xs={6}>
+                            <Typography className={classes.serieMetaData} gutterBottom variant="subheading">
+                                <span>Premiered</span>
                                 <p>{this.props.show.premiered}</p>
                             </Typography>
                         </Grid>
-                        <Grid item xs={6}>
-                            <Typography gutterBottom variant="subheading">
-                                Ratings
+                        <Grid className={classes.gridMetaData} item xs={6}>
+                            <Typography className={classes.serieMetaData} gutterBottom variant="subheading">
+                                <span>Ratings</span>
                                 <p>{this.props.show.rating && this.props.show.rating.average}</p>
                             </Typography>
                         </Grid>

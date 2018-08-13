@@ -6,3 +6,19 @@
     height: 0;
     padding-top: '33.25%';
 }
+
+.metaDataContainer {
+    margin-top: 5%;
+}
+
+.gridMetaData {
+    margin-bottom: 2% !important;
+}
+
+.gridMetaData span {
+    font-weight: bold;
+}
+
+.serieMetaData p {
+    margin: 0;
+}
