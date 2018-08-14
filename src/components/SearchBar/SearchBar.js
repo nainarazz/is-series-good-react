@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
-import {tmbdInstance, tvMazeinstance} from '../../axios';
+import AutosuggestHighlightMatch from 'autosuggest-highlight/match'
+import AutosuggestHighlightParse from 'autosuggest-highlight/parse'
+import { tmbdInstance, tvMazeinstance } from '../../axios';
 import { TMBD_API_KEY } from '../../store/api-constants';
 import theme from './searchBar.css';
 import { connect } from 'react-redux';
@@ -24,9 +26,26 @@ class SearchBar extends Component {
 
     getSuggestionValue = suggestion => suggestion.show.name;
 
-    renderSuggestion = suggestion => (
-        <div>{suggestion.show.name}</div>
-    );
+    renderSuggestion = (suggestion, { query }) => {
+        const suggestionText = suggestion.show.name;
+        const matches = AutosuggestHighlightMatch(suggestionText, query);
+        const parts = AutosuggestHighlightParse(suggestionText, matches);
+
+        return (
+            <span>
+                {parts.map((part, index) => {
+                    const styles = part.highlight ? { fontWeight: "bold", color: "red" } : null;
+
+                    return (
+                        <span style={styles} key={index}>
+                            {part.text}
+                        </span>
+                    );
+                })}
+            </span>
+        );
+        // <div>{suggestion.show.name}</div>
+    }
 
     onChange = (event, { newValue, method }) => {
         this.setState({ value: newValue });
@@ -72,7 +91,7 @@ class SearchBar extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        showSuggestionSelected: (showData) => dispatch({type: "SET_SHOW", showData})
+        showSuggestionSelected: (showData) => dispatch({ type: "SET_SHOW", showData })
     }
 };
 
