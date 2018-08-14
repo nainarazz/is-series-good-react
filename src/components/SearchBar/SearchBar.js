@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
 import AutosuggestHighlightMatch from 'autosuggest-highlight/match'
 import AutosuggestHighlightParse from 'autosuggest-highlight/parse'
-import { tmbdInstance, tvMazeinstance } from '../../axios';
-import { TMBD_API_KEY } from '../../store/api-constants';
+import { tmbdAxiosInstance, tvMazeAxiosInstance } from '../../axios';
+import { TMBD_API_KEY } from '../../api-constants';
+import * as actionTypes from '../../store/actions/actionTypes';
+import * as actions from '../../store/actions/tvShow';
 import theme from './searchBar.css';
 import { connect } from 'react-redux';
 
@@ -24,10 +26,10 @@ class SearchBar extends Component {
         this.setState({ suggestions: [] });
     }
 
-    getSuggestionValue = suggestion => suggestion.show.name;
+    getSuggestionValue = suggestion => suggestion.original_name;
 
     renderSuggestion = (suggestion, { query }) => {
-        const suggestionText = suggestion.show.name;
+        const suggestionText = suggestion.original_name;
         const matches = AutosuggestHighlightMatch(suggestionText, query);
         const parts = AutosuggestHighlightParse(suggestionText, matches);
 
@@ -44,7 +46,6 @@ class SearchBar extends Component {
                 })}
             </span>
         );
-        // <div>{suggestion.show.name}</div>
     }
 
     onChange = (event, { newValue, method }) => {
@@ -52,10 +53,10 @@ class SearchBar extends Component {
     };
 
     getTvShow = (searchValue) => {
-        return tvMazeinstance.get(`/search/shows?q=${searchValue}`)
+        return tmbdAxiosInstance.get(`search/tv?api_key=${TMBD_API_KEY}&language=en-US&query=${searchValue}&page=1`)
             .then(r => {
-                console.log(r.data);
-                const englishShows = r.data.filter(s => s.show.language === "English");
+                console.log(r.data.results);
+                const englishShows = r.data.results.filter(s => s.original_language === "en");
                 return englishShows;
             })
             .catch(error => {
@@ -80,7 +81,7 @@ class SearchBar extends Component {
                 suggestions={suggestions}
                 onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
                 onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                onSuggestionSelected={(event, { suggestion }) => this.props.showSuggestionSelected(suggestion.show)}
+                onSuggestionSelected={(event, { suggestion }) => this.props.showSuggestionSelected(suggestion)}
                 getSuggestionValue={this.getSuggestionValue}
                 renderSuggestion={this.renderSuggestion}
                 inputProps={inputProps}
@@ -91,7 +92,7 @@ class SearchBar extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        showSuggestionSelected: (showData) => dispatch({ type: "SET_SHOW", showData })
+        showSuggestionSelected: (showData) => dispatch(actions.fetchShowDetail(showData.id))
     }
 };
 

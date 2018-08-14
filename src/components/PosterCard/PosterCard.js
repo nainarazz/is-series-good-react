@@ -6,10 +6,12 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import styles from './posterCard.css';
+import { TMBD_IMAGE_BASE_URL } from '../../api-constants';
 
 class PosterCard extends Component {
     render() {
-        const imageSource = (this.props.show.image && this.props.show.image.medium) || " ";
+        
+        const imageSource = TMBD_IMAGE_BASE_URL + '/w500' + this.props.show.poster_path; 
         return (
             <Card className={styles.card}>
                 <CardMedia

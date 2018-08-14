@@ -9,40 +9,43 @@ import classes from './serieCard.css';
 
 class SerieCard extends Component {
     render() {
+        const genreList = this.props.show.genres.map(g => g.name);
+        const genreString = genreList.join(", ");
+
         return (
             <Card className={classes.card}>
                 <CardContent>
                     <Typography gutterBottom variant="headline" component="h2">
-                        {this.props.show.name}
+                        {this.props.show.original_name}
                     </Typography>
 
                     <Typography component="p">
-                        {this.props.show.summary && (this.props.show.summary).replace(/<[^>]+>/g, '')}
+                        {this.props.show.overview}
                     </Typography>
 
                     <Grid className={classes.metaDataContainer} container direction="row">
                         <Grid className={classes.gridMetaData} item xs={6}>
                             <Typography className={classes.serieMetaData} gutterBottom variant="subheading">
                                 <span>Runtime</span>
-                                <p>{this.props.show.runtime}</p>
+                                <p>{this.props.show.episode_run_time[0]}</p>
                             </Typography>
                         </Grid>
                         <Grid className={classes.gridMetaData} item xs={6}>
                             <Typography className={classes.serieMetaData} gutterBottom variant="subheading">
                                 <span>Genres</span>
-                                <p>{this.props.show.genres && this.props.show.genres.join(", ")}</p>
+                                <p>{genreString}</p>
                             </Typography>
                         </Grid>
                         <Grid className={classes.gridMetaData} item xs={6}>
                             <Typography className={classes.serieMetaData} gutterBottom variant="subheading">
-                                <span>Premiered</span>
-                                <p>{this.props.show.premiered}</p>
+                                <span>Number of Seasons</span>
+                                <p>{this.props.show.number_of_seasons}</p>
                             </Typography>
                         </Grid>
                         <Grid className={classes.gridMetaData} item xs={6}>
                             <Typography className={classes.serieMetaData} gutterBottom variant="subheading">
                                 <span>Ratings</span>
-                                <p>{this.props.show.rating && this.props.show.rating.average}</p>
+                                <p>{this.props.show.vote_average}</p>
                             </Typography>
                         </Grid>
                     </Grid>

@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-export const tmbdInstance = axios.create({
+export const tmbdAxiosInstance = axios.create({
     baseURL: 'https://api.themoviedb.org/3'
 });
 
-export const tvMazeinstance = axios.create({
+export const tvMazeAxiosInstance = axios.create({
     baseURL: 'http://api.tvmaze.com'
 });
