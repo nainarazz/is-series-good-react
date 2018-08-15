@@ -5,11 +5,18 @@ import SerieCard from '../../components//SerieCard/SerieCard';
 import PosterCard from '../../components/PosterCard/PosterCard';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import styles from './cardContainer.css';
+import SimilarShows from '../../components/SimilarShows/SimilarShowsGrid';
 import { connect } from 'react-redux';
 
 class CardContainer extends Component {
 
     render() {
+        const similarShowsComponent = this.props.similarShows.length > 0 ?
+            (<Grid item xs={12}>
+                <SimilarShows />
+            </Grid>)
+            : null;
+
         let components = (
             <div>
                 <Grid className={styles.headerContainer} container direction="row">
@@ -31,9 +38,7 @@ class CardContainer extends Component {
                         <SerieCard />
                     </Grid>
 
-                    <Grid item xs={12}>
-                        similar
-                    </Grid>
+                    {similarShowsComponent}
                 </Grid>
             </div>
         );
@@ -57,7 +62,8 @@ class CardContainer extends Component {
 
 const mapStateToProps = state => {
     return {
-        show: state.show
+        show: state.show,
+        similarShows: state.similarShows
     }
 }
 

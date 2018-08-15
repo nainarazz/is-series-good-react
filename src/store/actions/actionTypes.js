@@ -1,1 +1,2 @@
 export const SET_TV_SHOW = 'SET_TV_SHOW';
+export const SET_SIMILAR_TV_SHOW = 'SET_SIMILAR_TV_SHOW';
