@@ -10,8 +10,8 @@ import { TMBD_IMAGE_BASE_URL } from '../../api-constants';
 
 class PosterCard extends Component {
     render() {
-        
-        const imageSource = TMBD_IMAGE_BASE_URL + '/w500' + this.props.show.poster_path; 
+
+        const imageSource = this.props.show.poster_path ? TMBD_IMAGE_BASE_URL + '/w500' + this.props.show.poster_path : "";
         return (
             <Card className={styles.card}>
                 <CardMedia

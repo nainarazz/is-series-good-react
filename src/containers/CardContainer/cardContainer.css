@@ -5,6 +5,10 @@
     left: 25%;
 }
 
+.headerContainer {
+    margin-bottom: 5px;
+}
+
 @media screen and (max-width: 480px) {
     .container { 
         width: 75%;

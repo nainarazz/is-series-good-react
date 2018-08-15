@@ -12,15 +12,17 @@ class CardContainer extends Component {
     render() {
         let components = (
             <div>
-                <Grid container direction="row">
+                <Grid className={styles.headerContainer} container direction="row">
                     <Grid item xs={12} sm={12} md={4}>
-                        <h3>Is this Serie good?</h3>
+                        <h3 style={{ color: "white" }}>Is this Serie good?</h3>
                     </Grid>
 
-                    <Grid style={{margin: "auto"}} item xs={12} sm={12} md={8}>
+                    <Grid style={{ margin: "auto" }} item xs={12} sm={12} md={8}>
                         <SearchBar />
                     </Grid>
+                </Grid>
 
+                <Grid container direction="row">
                     <Grid item xs={12} sm={12} md={4}>
                         <PosterCard />
                     </Grid>
@@ -31,7 +33,7 @@ class CardContainer extends Component {
 
                     <Grid item xs={12}>
                         similar
-                </Grid>
+                    </Grid>
                 </Grid>
             </div>
         );
