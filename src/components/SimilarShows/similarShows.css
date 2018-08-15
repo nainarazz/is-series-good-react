@@ -20,6 +20,10 @@
     width: auto;
 }
 
+.gridListTile img:hover {
+    cursor: pointer;
+}
+
 .title {
     color: #fff;
 }
