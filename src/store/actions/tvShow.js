@@ -16,8 +16,21 @@ const setSimilarTvShow = (similarShows) => {
     }
 }
 
+const fetchShowStart = () => {
+    return {
+        type: actionTypes.FETCH_SHOW_START
+    }
+}
+
+const fetchShowSuccess = () => {
+    return {
+        type: actionTypes.FETCH_SHOW_SUCCESS
+    }
+}
+
 export const fetchShowDetail = (tvShowId) => {
     return dispatch => {
+        dispatch(fetchShowStart());
         Promise.all([
             tmbdAxiosInstance.get(`tv/${tvShowId}?api_key=${TMBD_API_KEY}&language=en-US`),
             tmbdAxiosInstance.get(`tv/${tvShowId}/similar?api_key=${TMBD_API_KEY}&language=en-US`)
@@ -28,6 +41,7 @@ export const fetchShowDetail = (tvShowId) => {
             console.log("similar shows ", topSimilarShows);
             dispatch(setTvShow(tmbdResults));
             dispatch(setSimilarTvShow(topSimilarShows));
+            dispatch(fetchShowSuccess());
         }).catch(error => {
                 console.log(error);
             });

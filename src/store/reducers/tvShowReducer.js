@@ -2,7 +2,8 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     show: {},
-    similarShows: []
+    similarShows: [],
+    isLoading: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -17,6 +18,16 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 similarShows: [...action.similarShows] 
+            };
+        case actionTypes.FETCH_SHOW_START:
+            return {
+                ...state,
+                isLoading: true 
+            };
+        case actionTypes.FETCH_SHOW_SUCCESS:
+            return {
+                ...state,
+                isLoading: false 
             };
         default:
             return { ...state }

@@ -14,13 +14,14 @@ class SimilarShowGrid extends Component {
 
     return (
       <div className={classes.root}>
-        <h3 style={{ color: "white" }}>Similar Shows</h3>
         <GridList className={classes.gridList} cols={2.5}>
           {similarShows.map(show => (
-            <GridListTile className={classes.gridListTile} key={show.poster_path}>
+            <GridListTile className={classes.gridListTile}
+              key={show.poster_path}
+              onClick={() => this.props.showSelected(show)}>
               <img src={show.poster_path ? TMBD_IMAGE_BASE_URL + '/w500' + show.poster_path : ""}
-                alt={show.original_name} 
-                onClick={() => this.props.showSelected(show)}/>
+                alt={show.original_name}
+              />
 
               <GridListTileBar
                 title={show.original_name}

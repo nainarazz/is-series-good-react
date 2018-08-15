@@ -27,17 +27,24 @@ const overlayStyles = {
 class Layout extends Component {
     render() {
         const imagePath = this.props.show.backdrop_path ? TMBD_IMAGE_BASE_URL + '/w500' + this.props.show.backdrop_path : "";
-
+        document.body.setAttribute(
+            "style",
+            `background-image: url(${imagePath});
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;`
+        );
+        
         return (
             <Aux>
-                <div style={backgroundStyles(imagePath)}>
+                {/* <div style={backgroundStyles(imagePath)}> */}
                     <div style={overlayStyles}>
                         <div style={cardContainerStyles}>
                             <CardContainer />
                         </div>
                     </div>
 
-                </div>
+                {/* </div> */}
             </Aux>
         );
     }
