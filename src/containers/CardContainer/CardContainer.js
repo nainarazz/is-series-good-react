@@ -8,10 +8,15 @@ import styles from './cardContainer.css';
 import SimilarShows from '../../components/SimilarShows/SimilarShowsGrid';
 import { connect } from 'react-redux';
 import Spinner from '../../components/Spinner/Spinner';
+import { TMBD_IMAGE_BASE_URL } from '../../api-constants';
 
 class CardContainer extends Component {
 
     render() {
+        const genreList = (this.props.show.genres && this.props.show.genres.map(g => g.name)) || null;
+        const genreString = (genreList && genreList.join(", ")) || "";
+        const imageSource = this.props.show.poster_path ? TMBD_IMAGE_BASE_URL + '/w500' + this.props.show.poster_path : "";
+
         let components = <Spinner />;
 
         if (!this.props.isLoading) {
@@ -37,11 +42,19 @@ class CardContainer extends Component {
 
                         <Grid container direction="row">
                             <Grid item xs={12} sm={12} md={4}>
-                                <PosterCard />
+                                <PosterCard imageUrl={imageSource}
+                                    title={this.props.show.name} />
                             </Grid>
 
                             <Grid item xs={12} sm={12} md={8}>
-                                <SerieCard />
+                                <SerieCard name={this.props.show.original_name}
+                                    overview={this.props.show.overview}
+                                    runtime={this.props.show.episode_run_time[0]}
+                                    genres={genreString}
+                                    seasons={this.props.show.number_of_seasons}
+                                    status={this.props.show.status}
+                                    ratings={this.props.show.vote_average}
+                                />
                             </Grid>
 
                             {similarShowsComponent}

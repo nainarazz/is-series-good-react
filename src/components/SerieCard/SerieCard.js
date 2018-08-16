@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -8,61 +7,50 @@ import Grid from '@material-ui/core/Grid';
 import RatingBar from '../RatingsBar/RatingsBar';
 import classes from './serieCard.css';
 
-class SerieCard extends Component {
-    render() {
-        const genreList = this.props.show.genres.map(g => g.name);
-        const genreString = genreList.join(", ");
+const serieCard = (props) => {
+    return (
+        <Card className={classes.card}>
+            <CardContent>
+                <Typography gutterBottom variant="headline" component="h2">
+                    {props.name}
+                </Typography>
 
-        return (
-            <Card className={classes.card}>
-                <CardContent>
-                    <Typography gutterBottom variant="headline" component="h2">
-                        {this.props.show.original_name}
-                    </Typography>
+                <Typography component="p">
+                    {props.overview}
+                </Typography>
 
-                    <Typography component="p">
-                        {this.props.show.overview}
-                    </Typography>
-
-                    <Grid className={classes.metaDataContainer} container direction="row">
-                        <Grid className={classes.gridMetaData} item xs={6}>
-                            <Typography className={classes.serieMetaData} gutterBottom variant="subheading">
-                                <span>Runtime</span>
-                                <p>{this.props.show.episode_run_time[0]}</p>
-                            </Typography>
-                        </Grid>
-                        <Grid className={classes.gridMetaData} item xs={6}>
-                            <Typography className={classes.serieMetaData} gutterBottom variant="subheading">
-                                <span>Genres</span>
-                                <p>{genreString}</p>
-                            </Typography>
-                        </Grid>
-                        <Grid className={classes.gridMetaData} item xs={6}>
-                            <Typography className={classes.serieMetaData} gutterBottom variant="subheading">
-                                <span>Number of Seasons</span>
-                                <p>{this.props.show.number_of_seasons}</p>
-                            </Typography>
-                        </Grid>
-                        <Grid className={classes.gridMetaData} item xs={6}>
-                            <Typography className={classes.serieMetaData} gutterBottom variant="subheading">
-                                <span>Status</span>
-                                <p>{this.props.show.status}</p>
-                            </Typography>
-                        </Grid>
-                        <Grid className={classes.ratingGrid} item xs={12}>
-                            <RatingBar siteName="TMBD" rating={this.props.show.vote_average} />
-                        </Grid>
+                <Grid className={classes.metaDataContainer} container direction="row">
+                    <Grid className={classes.gridMetaData} item xs={6}>
+                        <Typography className={classes.serieMetaData} gutterBottom variant="subheading">
+                            <span>Runtime</span>
+                            <p>{props.runtime[0]}</p>
+                        </Typography>
                     </Grid>
-                </CardContent>
-            </Card>
-        );
-    }
+                    <Grid className={classes.gridMetaData} item xs={6}>
+                        <Typography className={classes.serieMetaData} gutterBottom variant="subheading">
+                            <span>Genres</span>
+                            <p>{props.genres}</p>
+                        </Typography>
+                    </Grid>
+                    <Grid className={classes.gridMetaData} item xs={6}>
+                        <Typography className={classes.serieMetaData} gutterBottom variant="subheading">
+                            <span>Number of Seasons</span>
+                            <p>{props.seasons}</p>
+                        </Typography>
+                    </Grid>
+                    <Grid className={classes.gridMetaData} item xs={6}>
+                        <Typography className={classes.serieMetaData} gutterBottom variant="subheading">
+                            <span>Status</span>
+                            <p>{props.status}</p>
+                        </Typography>
+                    </Grid>
+                    <Grid className={classes.ratingGrid} item xs={12}>
+                        <RatingBar siteName="TMBD" rating={props.ratings} />
+                    </Grid>
+                </Grid>
+            </CardContent>
+        </Card>
+    );
 }
 
-const mapStateToProps = state => {
-    return {
-        show: state.show
-    };
-};
-
-export default connect(mapStateToProps, null)(SerieCard);
+export default serieCard;
