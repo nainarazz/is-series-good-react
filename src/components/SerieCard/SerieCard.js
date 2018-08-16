@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import RatingBar from '../RatingsBar/RatingsBar';
 import classes from './serieCard.css';
+import OverAllRatings from '../OverallRatings/OverAllRatings';
 
 const serieCard = (props) => {
     return (
@@ -44,10 +45,22 @@ const serieCard = (props) => {
                             <p>{props.status}</p>
                         </Typography>
                     </Grid>
-                    <Grid className={classes.ratingGrid} item xs={12}>
-                        <RatingBar siteName="TMBD" rating={props.ratings} />
+                </Grid>
+                <Grid container direction="row">
+                    <Grid container direction="column" item xs={12} sm={6} md={6}>
+                        <Grid className={classes.ratingGrid}>
+                            <RatingBar siteName="TMBD" rating={props.ratings} />
+                            <RatingBar siteName="Trakt" rating={props.ratings} />
+                            <RatingBar siteName="TV Maze" rating={props.ratings} />
+                        </Grid>
+                    </Grid>
+                    <Grid container direction="column" item xs={12} sm={6} md={6}>
+                        <Grid className={classes.finalRatingGrid}>
+                            <OverAllRatings />
+                        </Grid>
                     </Grid>
                 </Grid>
+
             </CardContent>
         </Card>
     );

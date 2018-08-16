@@ -1,0 +1,19 @@
+span.circle {
+    background: orangered;
+     border-radius: 0.8em;
+    -moz-border-radius: 0.8em;
+    -webkit-border-radius: 0.8em;
+    color: #ffffff;
+    display: inline-block;
+    font-weight: bold;
+    line-height: 1.6em;
+    margin-right: 15px;
+    text-align: center;
+    width: 1.6em; 
+    font-size: 40px;
+  }
+
+  span.impressionText {
+    color: yellow;
+    font-size: 22px;
+  }

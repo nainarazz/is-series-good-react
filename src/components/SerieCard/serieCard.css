@@ -30,6 +30,6 @@
     margin: 0;
 }
 
-.ratingGrid {
-    margin-top: 5px;
+.ratingGrid, .finalRatingGrid {
+    margin-top: 40px !important;
 }
