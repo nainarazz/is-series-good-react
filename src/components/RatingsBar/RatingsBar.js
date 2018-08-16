@@ -5,10 +5,10 @@ const ratingBar = (props) => {
     return (
         <div className={classes.skill}>
             <div className={classes.ratingBar}>
-                <div classname={classes.rate1}>
+                <div className={classes["rate" + Math.ceil(props.rating)]}>
                     <span className={`${classes.animate} ${classes.blue}`}>
-                        <div className={classes.siteName}>{props.siteName}</div> 
-                        <div className={classes.rating}>{props.rating}</div>
+                        <span className={classes.siteName}>{props.siteName}</span> 
+                        <span className={classes.rating}>{props.rating}/10</span>
                     </span>
                 </div>
             </div>
