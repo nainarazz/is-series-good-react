@@ -5,6 +5,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import RatingBar from '../RatingsBar/RatingsBar';
 import classes from './serieCard.css';
 
 class SerieCard extends Component {
@@ -44,9 +45,12 @@ class SerieCard extends Component {
                         </Grid>
                         <Grid className={classes.gridMetaData} item xs={6}>
                             <Typography className={classes.serieMetaData} gutterBottom variant="subheading">
-                                <span>Ratings</span>
-                                <p>{this.props.show.vote_average}</p>
+                                <span>Status</span>
+                                <p>{this.props.show.status}</p>
                             </Typography>
+                        </Grid>
+                        <Grid className={classes.ratingGrid} item xs={12}>
+                            <RatingBar siteName="TMBD" rating={this.props.show.vote_average} />
                         </Grid>
                     </Grid>
                 </CardContent>

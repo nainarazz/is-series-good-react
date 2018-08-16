@@ -1,0 +1,75 @@
+.skill{
+  width:250px;
+  margin-top:20px;
+}
+.ratingBar{
+  background:#000;
+  padding:3px;
+}
+.ratingBar span{
+  padding-top: 5px;
+  display:block;
+  height:12px;
+  text-align: center;
+  font-size: 10px;
+  color: #fff;
+}
+.ratingBar, .ratingBar span {
+  border-radius:4px; 
+}
+
+div.siteName {
+  text-align: left;
+  display: inline;
+}
+
+div.rating {
+  text-align: right;
+  display: inline;
+}
+
+/* Used to color the bars */
+.blue{ background:blue; }
+.red{ background:red; }
+
+/* .rate-n, n being the rating from 1 to 10 */
+.rate1{ width:10%; }
+.rate2{ width:20%; }
+.rate3{ width:30%; }
+.rate4{ width:40%; }
+.rate5{ width:50%; }
+.rate6{ width:60%; }
+.rate7{ width:70%; }
+.rate8{ width:80%; }
+.rate9{ width:90%; }
+.rate10{ width:100%; }
+
+/* CSS3 Animation */
+.animate{
+  animation: progress 2s linear;
+  -moz-animation: progress 2s linear;
+  -webkit-animation: progress 2s linear;
+  -ms-animation: progress 2s linear;
+  -o-animation: progress 2s linear;
+}
+/* Span fills 100% of parent div (.rate-n) which may be 10-100% of the width of black bar (.rating) */
+@-webkit-keyframes progress {
+  from { width:0% }
+  to { width:100%; }
+}
+@-moz-keyframes progress {
+  from { width:0% }
+  to { width:100%; }
+}
+@-ms-keyframes progress {
+  from { width:0% }
+  to { width:100%; }
+}
+@-o-keyframes progress {
+  from { width:0% }
+  to { width:100%; }
+}
+@keyframes progress {
+  from { width:0% }
+  to { width:100%; }
+}
