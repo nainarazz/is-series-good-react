@@ -35,6 +35,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 isLoading: false 
             };
+        case actionTypes.FETCH_SHOW_FAILED:
+            return {
+                ...state,
+                isLoading: false 
+            };
         default:
             return { ...state }
     }

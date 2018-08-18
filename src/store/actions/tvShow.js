@@ -35,6 +35,12 @@ const fetchShowSuccess = () => {
     }
 }
 
+const fetchShowFailed = () => {
+    return {
+        type: actionTypes.FETCH_SHOW_FAILED
+    }
+}
+
 function calculateOverallRating(ratings) {
     const raters = Object.keys(ratings);
     const ratingsSum = raters.reduce((acc, cur) => {
@@ -69,7 +75,6 @@ export const fetchShowDetail = (tvShowId) => {
                 const similarShowsResult = response[2].data.results;
                 const topSimilarShows = similarShowsResult.slice(0, 10);
 
-                console.log("tv maze results ", tvMazeResult);
                 const tmdbRating = tmdbResult && tmdbResult.vote_average;
                 const tvMazeRating = tvMazeResult && tvMazeResult.rating && tvMazeResult.rating.average;
 
@@ -78,14 +83,13 @@ export const fetchShowDetail = (tvShowId) => {
                 };
                 const overallRating = calculateOverallRating(ratings);
                 ratings.overall_rating = overallRating;
-                
-                console.log("ratings ", ratings);
                 dispatch(setTvShow(tmdbResult));
                 dispatch(setRatingsFromSites(ratings));
                 dispatch(setSimilarTvShow(topSimilarShows));
                 dispatch(fetchShowSuccess());
             }).catch(error => {
-                console.log(error);
+                console.log("error ater then", error);
+                dispatch(fetchShowFailed());
             });
     };
 }
