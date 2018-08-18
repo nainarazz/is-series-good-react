@@ -49,14 +49,14 @@ const serieCard = (props) => {
                 <Grid container direction="row">
                     <Grid container direction="column" item xs={12} sm={6} md={6}>
                         <Grid className={classes.ratingGrid}>
-                            <RatingBar siteName="TMBD" rating={props.ratings} />
-                            <RatingBar siteName="Trakt" rating={props.ratings} />
-                            <RatingBar siteName="TV Maze" rating={props.ratings} />
+                            <RatingBar siteName="TMBD" rating={props.ratings.tmdb} />
+                            <RatingBar siteName="Trakt" rating={props.ratings.tmdb} />
+                            <RatingBar siteName="TV Maze" rating={props.ratings.tvMaze} />
                         </Grid>
                     </Grid>
                     <Grid container direction="column" item xs={12} sm={6} md={6}>
                         <Grid className={classes.finalRatingGrid}>
-                            <OverAllRatings />
+                            <OverAllRatings rating={props.ratings.overall_rating} />
                         </Grid>
                     </Grid>
                 </Grid>

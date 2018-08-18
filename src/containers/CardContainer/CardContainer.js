@@ -53,7 +53,7 @@ class CardContainer extends Component {
                                     genres={genreString}
                                     seasons={this.props.show.number_of_seasons}
                                     status={this.props.show.status}
-                                    ratings={this.props.show.vote_average}
+                                    ratings={this.props.show.ratings_from_sites}
                                 />
                             </Grid>
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import classes from './overAllRatings.css';
 
-const overAllRatings = () => {
+const overAllRatings = (props) => {
     return (
         <div>
-            <span className={classes.circle}>7.2</span>
+            <span className={classes.circle}>{props.rating}</span>
             <span className={classes.impressionText}>Great show!!</span>
         </div>
     )
