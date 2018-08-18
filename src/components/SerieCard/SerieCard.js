@@ -9,6 +9,10 @@ import classes from './serieCard.css';
 import OverAllRatings from '../OverallRatings/OverAllRatings';
 
 const serieCard = (props) => {
+    const ratingBars = Object.keys(props.ratings).map(key => {
+        return { rater: key, rating: props.ratings[key] }
+    });
+
     return (
         <Card className={classes.card}>
             <CardContent>
@@ -49,9 +53,12 @@ const serieCard = (props) => {
                 <Grid container direction="row">
                     <Grid container direction="column" item xs={12} sm={6} md={6}>
                         <Grid className={classes.ratingGrid}>
-                            <RatingBar siteName="TMBD" rating={props.ratings.tmdb} />
-                            <RatingBar siteName="Trakt" rating={props.ratings.tmdb} />
-                            <RatingBar siteName="TV Maze" rating={props.ratings.tvMaze} />
+                            {ratingBars.map(r => {
+                                if (r.rater !== "overall_rating" && r.rating) {
+                                    return <RatingBar key={r.rater} siteName={r.rater} rating={r.rating} />
+                                }
+                                return null;
+                            })}
                         </Grid>
                     </Grid>
                     <Grid container direction="column" item xs={12} sm={6} md={6}>

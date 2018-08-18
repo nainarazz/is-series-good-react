@@ -53,7 +53,7 @@ class CardContainer extends Component {
                                     genres={genreString}
                                     seasons={this.props.show.number_of_seasons}
                                     status={this.props.show.status}
-                                    ratings={this.props.show.ratings_from_sites}
+                                    ratings={this.props.ratingsFromSites}
                                 />
                             </Grid>
 
@@ -82,6 +82,7 @@ class CardContainer extends Component {
 const mapStateToProps = state => {
     return {
         show: state.show,
+        ratingsFromSites: state.ratingsFromSites,
         similarShows: state.similarShows,
         isLoading: state.isLoading
     }
