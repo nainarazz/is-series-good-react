@@ -41,50 +41,6 @@ const fetchShowFailed = () => {
     }
 }
 
-function calculateOverallRating(ratings) {
-    const raters = Object.keys(ratings);
-    const ratingsSum = raters.reduce((acc, cur) => {
-        return cur ? acc + ratings[cur] : 0;
-    }, 0);
-
-    // shows with 0 ratings should not be inclded in the average calculation
-    const nonZeroRatings = raters.filter(key => ratings[key] > 0);
-
-    const average = ratingsSum / nonZeroRatings.length;
-    const rounded = Math.round(average * 10) / 10;
-    return rounded.toFixed(1);
-
-}
-
-function sortSimilarShows(a, b) {
-    var showA = a.vote_average;
-    var showB = b.vote_average;
-
-    if (showA > showB) {
-        return -1;
-    }
-
-    if (showA < showB) {
-        return 1;
-    }
-
-    return 0;
-}
-
-function apiRequests(axiosInstance, url, dispatch) {
-    return new Promise((resolve, reject) => {
-
-        axiosInstance.get(url).then(res => {
-            console.log("response obj", res);
-            resolve(res);
-        }).catch(error => {
-            resolve(null);
-            console.log("error on api requests", error);
-            dispatch(fetchShowFailed());
-        });
-    });
-}
-
 export const fetchShowDetail = (tvShowId) => {
     return dispatch => {
         dispatch(fetchShowStart());
@@ -103,7 +59,7 @@ export const fetchShowDetail = (tvShowId) => {
                 const similarShowsResult = response[2] && response[2].data.results;
                 const topSimilarShows = similarShowsResult
                     .filter(s => s.original_language === "en" && s.vote_count > 10)
-                    .sort(sortSimilarShows)
+                    .sort(sortSimilarShowsDescending)
                     .slice(0, 10);
 
                 const tmdbRating = tmdbResult && tmdbResult.vote_average;
@@ -114,6 +70,7 @@ export const fetchShowDetail = (tvShowId) => {
                 };
                 const overallRating = calculateOverallRating(ratings);
                 ratings.overall_rating = overallRating;
+                console.log("ratings ", ratings);
                 dispatch(setTvShow(tmdbResult));
                 dispatch(setRatingsFromSites(ratings));
                 dispatch(setSimilarTvShow(topSimilarShows));
@@ -123,4 +80,47 @@ export const fetchShowDetail = (tvShowId) => {
                 dispatch(fetchShowFailed());
             });
     };
+}
+
+function calculateOverallRating(ratings) {
+    const raters = Object.keys(ratings);
+    const ratingsSum = raters.reduce((acc, cur) => {
+        return cur ? acc + ratings[cur] : 0;
+    }, 0);
+
+    // shows with 0 ratings should not be inclded in the average calculation
+    const nonZeroRatings = raters.filter(key => ratings[key] > 0);
+
+    const average = ratingsSum / nonZeroRatings.length;
+    const rounded = Math.round(average * 10) / 10;
+    return parseFloat(rounded.toFixed(1));
+
+}
+
+function sortSimilarShowsDescending(a, b) {
+    var showA = a.vote_average;
+    var showB = b.vote_average;
+
+    if (showA > showB) {
+        return -1;
+    }
+
+    if (showA < showB) {
+        return 1;
+    }
+
+    return 0;
+}
+
+function apiRequests(axiosInstance, url, dispatch) {
+    return new Promise((resolve, reject) => {
+
+        axiosInstance.get(url).then(res => {
+            resolve(res);
+        }).catch(error => {
+            resolve(null);
+            console.log("error on api requests", error);
+            dispatch(fetchShowFailed());
+        });
+    });
 }

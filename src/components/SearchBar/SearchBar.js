@@ -58,7 +58,6 @@ class SearchBar extends Component {
                     return s.original_language === "en" &&
                         s.vote_count > 10
                 });
-                console.log("English shows", englishShows);
                 return englishShows;
             })
             .catch(error => {
