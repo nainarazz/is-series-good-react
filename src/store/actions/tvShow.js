@@ -41,6 +41,13 @@ const fetchShowFailed = () => {
     }
 }
 
+export const setError = (errorMessage) => {
+    return {
+        type: actionTypes.SET_ERROR,
+        errorMessage
+    }
+}
+
 export const fetchShowDetail = (tvShowId) => {
     return dispatch => {
         dispatch(fetchShowStart());
@@ -68,9 +75,10 @@ export const fetchShowDetail = (tvShowId) => {
                 const ratings = {
                     tmdb: tmdbRating, tvMaze: tvMazeRating
                 };
+
                 const overallRating = calculateOverallRating(ratings);
                 ratings.overall_rating = overallRating;
-                console.log("ratings ", ratings);
+
                 dispatch(setTvShow(tmdbResult));
                 dispatch(setRatingsFromSites(ratings));
                 dispatch(setSimilarTvShow(topSimilarShows));
@@ -78,6 +86,7 @@ export const fetchShowDetail = (tvShowId) => {
             }).catch(error => {
                 console.log("error fetching show detail ", error);
                 dispatch(fetchShowFailed());
+                dispatch(setError(error.message));
             });
     };
 }

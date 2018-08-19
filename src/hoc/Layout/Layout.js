@@ -3,6 +3,7 @@ import Aux from '../Aux/Aux';
 import CardContainer from '../../containers/CardContainer/CardContainer';
 import { TMBD_IMAGE_BASE_URL } from '../../api-constants';
 import { connect } from 'react-redux';
+import ErrorSnackBar from '../../components/ErrorSnackbar/ErrorSnackbar';
 
 const cardContainerStyles = {
     margin: "auto",
@@ -34,15 +35,21 @@ class Layout extends Component {
             background-position: center;
             background-size: cover;`
         );
-        
+
         return (
             <Aux>
                 {/* <div style={backgroundStyles(imagePath)}> */}
-                    <div style={overlayStyles}>
-                        <div style={cardContainerStyles}>
-                            <CardContainer />
-                        </div>
+                <div style={overlayStyles}>
+                    <div style={cardContainerStyles}>
+                        <CardContainer />
                     </div>
+                </div>
+                {this.props.error.isError ?
+                    <ErrorSnackBar message={this.props.error.errorMessage}
+                        error={this.props.error.isError} />
+                    : null
+                }
+                {/* <ErrorSnackBar className="snackbar" error={this.props.error}/> */}
 
                 {/* </div> */}
             </Aux>
@@ -52,7 +59,8 @@ class Layout extends Component {
 
 const mapStateToProps = state => {
     return {
-        show: state.show
+        show: state.show,
+        error: state.error
     }
 }
 

@@ -62,7 +62,8 @@ class SearchBar extends Component {
             })
             .catch(error => {
                 console.log(error.message);
-                throw new Error('error getting tv show ', error.message);
+                this.props.setError(error.message);
+                return [];
             });
     }
 
@@ -93,7 +94,8 @@ class SearchBar extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        showSuggestionSelected: (showData) => dispatch(actions.fetchShowDetail(showData.id))
+        showSuggestionSelected: (showData) => dispatch(actions.fetchShowDetail(showData.id)),
+        setError: errorMessage => dispatch(actions.setError(errorMessage))
     }
 };
 
