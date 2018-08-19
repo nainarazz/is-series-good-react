@@ -2,7 +2,6 @@ import React from 'react';
 import classes from './overAllRatings.css';
 
 function getSerieImpressionText(rating) {
-    console.log("rating inside overall rating ", rating);
     let text = "just choose another serie";
 
     if (rating >= 8) {

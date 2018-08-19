@@ -4,6 +4,7 @@ import CardContainer from '../../containers/CardContainer/CardContainer';
 import { TMBD_IMAGE_BASE_URL } from '../../api-constants';
 import { connect } from 'react-redux';
 import ErrorSnackBar from '../../components/ErrorSnackbar/ErrorSnackbar';
+import defaultBackground from '../../assets/defaultBackground.jpg'
 
 const cardContainerStyles = {
     margin: "auto",
@@ -27,7 +28,7 @@ const overlayStyles = {
 
 class Layout extends Component {
     render() {
-        const imagePath = this.props.show.backdrop_path ? TMBD_IMAGE_BASE_URL + '/w500' + this.props.show.backdrop_path : "";
+        const imagePath = this.props.show.backdrop_path ? TMBD_IMAGE_BASE_URL + '/w500' + this.props.show.backdrop_path : defaultBackground;
         document.body.setAttribute(
             "style",
             `background-image: url(${imagePath});
@@ -49,7 +50,6 @@ class Layout extends Component {
                         error={this.props.error.isError} />
                     : null
                 }
-                {/* <ErrorSnackBar className="snackbar" error={this.props.error}/> */}
 
                 {/* </div> */}
             </Aux>
