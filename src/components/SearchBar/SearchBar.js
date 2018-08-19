@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
 import AutosuggestHighlightMatch from 'autosuggest-highlight/match'
 import AutosuggestHighlightParse from 'autosuggest-highlight/parse'
-import { tmbdAxiosInstance, tvMazeAxiosInstance } from '../../axios';
+import { tmbdAxiosInstance } from '../../axios';
 import { TMBD_API_KEY } from '../../api-constants';
-import * as actionTypes from '../../store/actions/actionTypes';
 import * as actions from '../../store/actions/tvShow';
 import theme from './searchBar.css';
 import { connect } from 'react-redux';
@@ -55,8 +54,8 @@ class SearchBar extends Component {
     getTvShow = (searchValue) => {
         return tmbdAxiosInstance.get(`search/tv?api_key=${TMBD_API_KEY}&language=en-US&query=${searchValue}&page=1`)
             .then(r => {
-                console.log(r.data.results);
-                const englishShows = r.data.results.filter(s => s.original_language === "en");
+                const englishShows = r.data.results.filter(s => s.original_language === "en" && s.first_air_date !== "" && s.vote_average > 0 );
+                console.log("English shows" , englishShows);
                 return englishShows;
             })
             .catch(error => {

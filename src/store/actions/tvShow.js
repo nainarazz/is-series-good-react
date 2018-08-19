@@ -56,6 +56,20 @@ function calculateOverallRating(ratings) {
 
 }
 
+function apiRequests(axiosInstance, url, dispatch) {
+    return new Promise((resolve, reject) => {
+        
+        axiosInstance.get(url).then(res => {
+            console.log("response obj" , res);
+            resolve(res);
+        }).catch(error => {
+            resolve(null);
+            console.log("error on api requests", error);
+            dispatch(fetchShowFailed());
+        });
+    });
+}
+
 export const fetchShowDetail = (tvShowId) => {
     return dispatch => {
         dispatch(fetchShowStart());
@@ -64,17 +78,19 @@ export const fetchShowDetail = (tvShowId) => {
                 console.log("external ids ", res);
                 const imdbId = res.data.imdb_id;
                 return Promise.all([
-                    tmbdAxiosInstance.get(`tv/${tvShowId}?api_key=${TMBD_API_KEY}&language=en-US`),
-                    tvMazeAxiosInstance.get(`lookup/shows?imdb=${imdbId}`),
-                    tmbdAxiosInstance.get(`tv/${tvShowId}/similar?api_key=${TMBD_API_KEY}&language=en-US`),
+                    apiRequests(tmbdAxiosInstance, `tv/${tvShowId}?api_key=${TMBD_API_KEY}&language=en-US`, dispatch),
+                    apiRequests(tvMazeAxiosInstance, `lookup/shows?imdb=${imdbId}`, dispatch),
+                    apiRequests(tmbdAxiosInstance, `tv/${tvShowId}/similar?api_key=${TMBD_API_KEY}&language=en-US`, dispatch)
                 ]);
             })
             .then(response => {
-                const tmdbResult = response[0].data;
-                const tvMazeResult = response[1].data;
-                const similarShowsResult = response[2].data.results;
+                const tmdbResult = response[0] && response[0].data;
+                const tvMazeResult = response[1] && response[1].data;
+                const similarShowsResult = response[0] && response[2].data.results;
                 const topSimilarShows = similarShowsResult.slice(0, 10);
 
+                console.log("tmdb result" , tmdbResult);
+                console.log("tv maze result" , tvMazeResult);
                 const tmdbRating = tmdbResult && tmdbResult.vote_average;
                 const tvMazeRating = tvMazeResult && tvMazeResult.rating && tvMazeResult.rating.average;
 
@@ -88,7 +104,7 @@ export const fetchShowDetail = (tvShowId) => {
                 dispatch(setSimilarTvShow(topSimilarShows));
                 dispatch(fetchShowSuccess());
             }).catch(error => {
-                console.log("error ater then", error);
+                console.log("error fetching show detail ", error);
                 dispatch(fetchShowFailed());
             });
     };
