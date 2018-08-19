@@ -54,8 +54,11 @@ class SearchBar extends Component {
     getTvShow = (searchValue) => {
         return tmbdAxiosInstance.get(`search/tv?api_key=${TMBD_API_KEY}&language=en-US&query=${searchValue}&page=1`)
             .then(r => {
-                const englishShows = r.data.results.filter(s => s.original_language === "en" && s.first_air_date !== "" && s.vote_average > 0 );
-                console.log("English shows" , englishShows);
+                const englishShows = r.data.results.filter(s => {
+                    return s.original_language === "en" &&
+                        s.vote_count > 10
+                });
+                console.log("English shows", englishShows);
                 return englishShows;
             })
             .catch(error => {
