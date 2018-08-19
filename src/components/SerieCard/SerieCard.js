@@ -28,7 +28,7 @@ const serieCard = (props) => {
                     <Grid className={classes.gridMetaData} item xs={6}>
                         <Typography className={classes.serieMetaData} gutterBottom variant="subheading">
                             <span>Runtime</span>
-                            <p>{props.runtime[0]}</p>
+                            <p>{props.runtime}</p>
                         </Typography>
                     </Grid>
                     <Grid className={classes.gridMetaData} item xs={6}>
