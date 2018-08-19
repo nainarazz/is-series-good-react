@@ -31,7 +31,7 @@ class Layout extends Component {
         const imagePath = this.props.show.backdrop_path ? TMBD_IMAGE_BASE_URL + '/w500' + this.props.show.backdrop_path : defaultBackground;
         document.body.setAttribute(
             "style",
-            `background-image: url(${imagePath});
+            `background-image: url(${defaultBackground});
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;`
@@ -39,19 +39,19 @@ class Layout extends Component {
 
         return (
             <Aux>
-                {/* <div style={backgroundStyles(imagePath)}> */}
-                <div style={overlayStyles}>
-                    <div style={cardContainerStyles}>
-                        <CardContainer />
+                <div style={backgroundStyles(imagePath)}>
+                    <div style={overlayStyles}>
+                        <div style={cardContainerStyles}>
+                            <CardContainer />
+                        </div>
                     </div>
-                </div>
-                {this.props.error.isError ?
-                    <ErrorSnackBar message={this.props.error.errorMessage}
-                        error={this.props.error.isError} />
-                    : null
-                }
+                    {this.props.error.isError ?
+                        <ErrorSnackBar message={this.props.error.errorMessage}
+                            error={this.props.error.isError} />
+                        : null
+                    }
 
-                {/* </div> */}
+                </div>
             </Aux>
         );
     }

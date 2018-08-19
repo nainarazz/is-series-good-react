@@ -128,7 +128,6 @@ function apiRequests(axiosInstance, url, dispatch) {
             resolve(res);
         }).catch(error => {
             resolve(null);
-            console.log("error on api requests", error);
             dispatch(fetchShowFailed());
         });
     });
