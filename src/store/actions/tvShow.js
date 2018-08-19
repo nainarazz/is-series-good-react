@@ -56,11 +56,26 @@ function calculateOverallRating(ratings) {
 
 }
 
+function sortSimilarShows(a, b) {
+    var showA = a.vote_average;
+    var showB = b.vote_average;
+
+    if (showA > showB) {
+        return -1;
+    }
+
+    if (showA < showB) {
+        return 1;
+    }
+
+    return 0;
+}
+
 function apiRequests(axiosInstance, url, dispatch) {
     return new Promise((resolve, reject) => {
-        
+
         axiosInstance.get(url).then(res => {
-            console.log("response obj" , res);
+            console.log("response obj", res);
             resolve(res);
         }).catch(error => {
             resolve(null);
@@ -75,7 +90,6 @@ export const fetchShowDetail = (tvShowId) => {
         dispatch(fetchShowStart());
         tmbdAxiosInstance.get(`tv/${tvShowId}/external_ids?api_key=${TMBD_API_KEY}&language=en-US`)
             .then(res => {
-                console.log("external ids ", res);
                 const imdbId = res.data.imdb_id;
                 return Promise.all([
                     apiRequests(tmbdAxiosInstance, `tv/${tvShowId}?api_key=${TMBD_API_KEY}&language=en-US`, dispatch),
@@ -86,11 +100,12 @@ export const fetchShowDetail = (tvShowId) => {
             .then(response => {
                 const tmdbResult = response[0] && response[0].data;
                 const tvMazeResult = response[1] && response[1].data;
-                const similarShowsResult = response[0] && response[2].data.results;
-                const topSimilarShows = similarShowsResult.slice(0, 10);
+                const similarShowsResult = response[2] && response[2].data.results;
+                const topSimilarShows = similarShowsResult
+                    .filter(s => s.original_language === "en" && s.vote_count > 10)
+                    .sort(sortSimilarShows)
+                    .slice(0, 10);
 
-                console.log("tmdb result" , tmdbResult);
-                console.log("tv maze result" , tvMazeResult);
                 const tmdbRating = tmdbResult && tmdbResult.vote_average;
                 const tvMazeRating = tvMazeResult && tvMazeResult.rating && tvMazeResult.rating.average;
 
