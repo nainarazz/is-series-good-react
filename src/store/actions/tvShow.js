@@ -57,23 +57,25 @@ export const fetchShowDetail = (tvShowId) => {
                 return Promise.all([
                     apiRequests(tmbdAxiosInstance, `tv/${tvShowId}?api_key=${TMBD_API_KEY}&language=en-US`, dispatch),
                     apiRequests(tvMazeAxiosInstance, `lookup/shows?imdb=${imdbId}`, dispatch),
+                    fetchTraktRatings(`https://api.trakt.tv/shows/${imdbId}/ratings`, dispatch),
                     apiRequests(tmbdAxiosInstance, `tv/${tvShowId}/similar?api_key=${TMBD_API_KEY}&language=en-US`, dispatch)
                 ]);
             })
             .then(response => {
                 const tmdbResult = response[0] && response[0].data;
                 const tvMazeResult = response[1] && response[1].data;
-                const similarShowsResult = response[2] && response[2].data.results;
+                const similarShowsResult = response[3] && response[3].data.results;
                 const topSimilarShows = similarShowsResult
                     .filter(s => s.original_language === "en" && s.vote_count > 10)
                     .sort(sortSimilarShowsDescending)
                     .slice(0, 10);
 
                 const tmdbRating = tmdbResult && tmdbResult.vote_average;
+                const traktRating = response[2] && response[2].rating;
                 const tvMazeRating = tvMazeResult && tvMazeResult.rating && tvMazeResult.rating.average;
 
                 const ratings = {
-                    tmdb: tmdbRating, tvMaze: tvMazeRating
+                    tmdb: tmdbRating, tvMaze: tvMazeRating, trakt: traktRating
                 };
 
                 const overallRating = calculateOverallRating(ratings);
@@ -102,8 +104,7 @@ function calculateOverallRating(ratings) {
 
     const average = ratingsSum / nonZeroRatings.length;
     const rounded = Math.round(average * 10) / 10;
-    return parseFloat(rounded.toFixed(1));
-
+    return rounded;
 }
 
 function sortSimilarShowsDescending(a, b) {
@@ -126,6 +127,30 @@ function apiRequests(axiosInstance, url, dispatch) {
 
         axiosInstance.get(url).then(res => {
             resolve(res);
+        }).catch(error => {
+            resolve(null);
+            dispatch(fetchShowFailed());
+        });
+    });
+}
+
+function fetchTraktRatings(url, dispatch) {
+
+    // I used the Javascript fetch method instead of axios to request data from Trakt API because
+    // the axios package had a bug at this time of writing. The headers that are applied
+    // to an axios instance are applied to all other instances as well, which is not what I needed.
+    // I only wanted some headers to be applied to request headers for requests going to Trakt API.  
+    return new Promise((resolve, reject) => {
+
+        fetch(url, {
+            headers: {
+                "Content-type": "application/json",
+                "trakt-api-key": "e255561c1771764c0388f96052d872efcae3079cccc903e0d9abfefecc64bf97",
+                "trakt-api-version": 2
+            }
+        }).then(res => res.json())
+        .then(data => {
+            resolve(data);
         }).catch(error => {
             resolve(null);
             dispatch(fetchShowFailed());

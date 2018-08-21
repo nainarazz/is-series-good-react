@@ -8,7 +8,7 @@ const ratingBar = (props) => {
                 <div className={classes["rate" + Math.floor(props.rating)]}>
                     <span className={`${classes.animate} ${classes.blue}`}>
                         <span className={classes.siteName}>{props.siteName}</span> 
-                        <span className={classes.rating}>{props.rating}/10</span>
+                        <span className={classes.rating}>{(Math.round(props.rating * 10) / 10)}/10</span>
                     </span>
                 </div>
             </div>
