@@ -5,5 +5,5 @@ export const tmbdAxiosInstance = axios.create({
 });
 
 export const tvMazeAxiosInstance = axios.create({
-    baseURL: 'http://api.tvmaze.com'
+    baseURL: 'https://api.tvmaze.com'
 });
