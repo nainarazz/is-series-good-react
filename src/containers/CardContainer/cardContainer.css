@@ -5,6 +5,9 @@
     left: 25%;
 }
 
+.container h3 {
+    color: white;
+}
 .headerContainer {
     margin-bottom: 5px;
 }
