@@ -55,10 +55,10 @@ export const fetchShowDetail = (tvShowId) => {
             .then(res => {
                 const imdbId = res.data.imdb_id;
                 return Promise.all([
-                    apiRequests(tmbdAxiosInstance, `tv/${tvShowId}?api_key=${TMBD_API_KEY}&language=en-US`, dispatch),
-                    apiRequests(tvMazeAxiosInstance, `lookup/shows?imdb=${imdbId}`, dispatch),
-                    fetchTraktRatings(`https://api.trakt.tv/shows/${imdbId}/ratings`, dispatch),
-                    apiRequests(tmbdAxiosInstance, `tv/${tvShowId}/similar?api_key=${TMBD_API_KEY}&language=en-US`, dispatch)
+                    apiRequests(tmbdAxiosInstance, `tv/${tvShowId}?api_key=${TMBD_API_KEY}&language=en-US`),
+                    apiRequests(tvMazeAxiosInstance, `lookup/shows?imdb=${imdbId}`),
+                    fetchTraktRatings(`https://api.trakt.tv/shows/${imdbId}/ratings`),
+                    apiRequests(tmbdAxiosInstance, `tv/${tvShowId}/similar?api_key=${TMBD_API_KEY}&language=en-US`)
                 ]);
             })
             .then(response => {
@@ -122,19 +122,18 @@ function sortSimilarShowsDescending(a, b) {
     return 0;
 }
 
-function apiRequests(axiosInstance, url, dispatch) {
+function apiRequests(axiosInstance, url) {
     return new Promise((resolve, reject) => {
 
         axiosInstance.get(url).then(res => {
             resolve(res);
         }).catch(error => {
             resolve(null);
-            dispatch(fetchShowFailed());
         });
     });
 }
 
-function fetchTraktRatings(url, dispatch) {
+function fetchTraktRatings(url) {
 
     // I used the Javascript fetch method instead of axios to request data from Trakt API because
     // the axios package had a bug at this time of writing. The headers that are applied
@@ -153,7 +152,6 @@ function fetchTraktRatings(url, dispatch) {
             resolve(data);
         }).catch(error => {
             resolve(null);
-            dispatch(fetchShowFailed());
         });
     });
 }
