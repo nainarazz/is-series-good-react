@@ -4,7 +4,7 @@ import CardContainer from '../../containers/CardContainer/CardContainer';
 import { TMBD_IMAGE_BASE_URL } from '../../api-constants';
 import { connect } from 'react-redux';
 import ErrorSnackBar from '../../components/ErrorSnackbar/ErrorSnackbar';
-import defaultBackground from '../../assets/defaultBackground.jpg'
+import defaultBackground from '../../assets/defaultBackground-optimized.jpg'
 
 const cardContainerStyles = {
     margin: "auto",
